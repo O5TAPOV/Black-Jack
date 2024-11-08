@@ -11,9 +11,9 @@ namespace Black_Jack
             Settings.ConsoleSetting();
             PlayerLogic cardsPlayer = new PlayerLogic();
             cardsPlayer.AddFirstCards();
-            cardsPlayer.OutputCards();
+            cardsPlayer.ShowCards();
             cardsPlayer.AddCard();
-            cardsPlayer.OutputCards();
+            cardsPlayer.ShowCards();
         }
     }
 }

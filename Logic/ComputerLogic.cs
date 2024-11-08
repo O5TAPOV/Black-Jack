@@ -6,7 +6,8 @@ using System.Threading.Tasks;
 
 namespace Logic
 {
-    public class ComputerLogic
+    public class ComputerLogic : CommonLogic
     {
+
     }
 }

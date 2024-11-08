@@ -10,39 +10,35 @@ namespace Logic
     public class CommonLogic
     {
         public static List <string> cards = new List<string>();
-        public void AddFirstCards(List<string> targetCards = null) 
+        public void AddCard(List<string> firstCards = null, List<string> secondCards = null) 
         {
-            targetCards ??= cards;
-            targetCards.Add(Cards.GenerateCard());
-            targetCards.Add(Cards.GenerateCard()); 
-        }
-        public void AddCard(List<string> targetCards = null) 
-        {
-            targetCards ??= cards;
             string card;
+            firstCards ??= cards;
             while (true)
             {
                 card = Cards.GenerateCard();
-                if (!targetCards.Contains(card)) { targetCards.Add(card); break; }
+                if (!firstCards.Contains(card) && (secondCards == null || !secondCards.Contains(card))) { firstCards.Add(card); break; }
             }
         }
+        public void AddFirstCards() { 
+            AddCard(); AddCard(); 
+        }
 
-        public static byte cardPrice_From6toK(string card)
+        public static byte cardConvertationFrom6toK(string card)
         {
-            switch (card)
+            return card switch
             {
-                case "6": return 6;
-                case "7": return 7;
-                case "8": return 8;
-                case "9": return 9;
-                case "10": return 10;
-                case "J": return 2;
-                case "Q": return 3;
-                case "K": return 4;
-            }
-            return 0;
+                "6" => 6,
+                "7" => 7,
+                "8" => 8,
+                "9" => 9,
+                "10" => 10,
+                "J" => 2,
+                "Q" => 3,
+                "K" => 4,
+                _ => 0
+            };
         }
-
         public static string GetCardNominal(string card) => card.Substring(1);
         public static byte CardsSum()
         {
@@ -59,22 +55,18 @@ namespace Logic
             //Підсумовування
             foreach (string c in nominalCards)
             {
-                if (c == "A")
-                {
-                    if (sum.Sum() > 10) sum.Add(1);
-                    else sum.Add(11);
-                }
-
-                sum.Add(cardPrice_From6toK(c));
+                if (c == "A") sum.Add(sum.Sum() > 10 ? 1 : 11);
+                sum.Add(cardConvertationFrom6toK(c));
             }
             return (byte)sum.Sum();
         }
 
-        public void OutputCards()
+        public void ShowCards(List<string> targetCards = null)
         {
+            targetCards ??= cards;
             Console.Write("Ваші карти: ");
-            foreach (string c in cards) Console.Write($"{c} ");
-            Console.WriteLine("\nСума карт: " + CardsSum());
+            foreach (string c in targetCards) Console.Write($"{c} ");
+            Console.WriteLine($"\nСума карт: {CardsSum()}\n");
         }
     }
 }
