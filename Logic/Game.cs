@@ -11,16 +11,16 @@ namespace Logic
         private static int MAX_SUM = 30;
         public static void Run()
         {
+            List<string> cardsPlayer = PlayerLogic.cardsPlayer;
+            List<string> cardsComputer = ComputerLogic.cardsComputer;
+            bool isAddCard;
             do
             {
-                List<string> cardsPlayer = PlayerLogic.cardsPlayer;
-                List<string> cardsComputer = ComputerLogic.cardsComputer;
                 AddFirstCards(cardsPlayer, cardsComputer);
                 AddFirstCards(cardsComputer, cardsPlayer);
                 ShowCards(cardsPlayer);
                 while (true)
                 {
-                    bool isAddCard = false;
                     if (CardsSum(cardsPlayer) < MAX_SUM) isAddCard = EnterBoolean("1 - так\n0 - ні\nБажаєте добрати карту?: ");
                     else { Console.WriteLine($"Ви більше не можете брати карти, оскільки їх сума перевищує {MAX_SUM}"); break; }
 
