@@ -6,7 +6,9 @@ using System.Threading.Tasks;
 
 namespace Logic
 {
-    internal class PlayerLogic
+    public class PlayerLogic : CommonLogic
     {
+        public static List<string> cardsPlayer = new List<string>();
+        
     }
 }

@@ -10,7 +10,12 @@ namespace Logic
     public class CommonLogic
     {
         public static List <string> cards = new List<string>();
-        public void AddFirstCards() { cards.Add(Cards.GenerateCard()); cards.Add(Cards.GenerateCard()); }
+        public void AddFirstCards(List<string> targetCards = null) 
+        {
+            targetCards ??= cards;
+            targetCards.Add(Cards.GenerateCard());
+            targetCards.Add(Cards.GenerateCard()); 
+        }
         public void AddCard() 
         {
             string card;
@@ -67,10 +72,7 @@ namespace Logic
         public void OutputCards()
         {
             Console.Write("Ваші карти: ");
-            foreach (string c in cards)
-            {
-                Console.Write($"{c} ");
-            }
+            foreach (string c in cards) Console.Write($"{c} ");
             Console.WriteLine("\nСума карт: " + CardsSum());
         }
     }
