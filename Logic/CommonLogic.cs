@@ -40,7 +40,7 @@ namespace Logic
             };
         }
         private static string GetCardNominal(string card) => card.Substring(1);
-        private static byte CardsSum(List<string> targetCards = null)
+        public static byte CardsSum(List<string> targetCards = null)
         {
             targetCards ??= cards;
             List<int> sum = new List<int>();
@@ -64,10 +64,17 @@ namespace Logic
 
         public static void ShowCards(List<string> targetCards = null)
         {
+            Console.Clear();
             targetCards ??= cards;
             Console.Write("Карти: ");
             foreach (string c in targetCards) Console.Write($"{c} ");
             Console.WriteLine($"\nСума карт: {CardsSum(targetCards)}\n");
+        }
+
+        public static void Clear(List<string> targetCards = null)
+        {
+            targetCards ??= cards;
+            targetCards.Clear();
         }
     }
 }

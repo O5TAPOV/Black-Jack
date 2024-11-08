@@ -10,14 +10,7 @@ namespace Black_Jack
         static void Main(string[] args)
         {
             Settings.ConsoleSetting();
-            List<string> cardsPlayer = PlayerLogic.cardsPlayer;
-            List<string> cardsComputer = ComputerLogic.cardsComputer;
-            AddFirstCards(cardsPlayer, cardsComputer);
-            AddFirstCards(cardsComputer, cardsPlayer);
-            ShowCards(cardsPlayer);
-            ShowCards(cardsComputer);
-            AddCard(cardsPlayer);
-            ShowCards(cardsPlayer);
+            Game.Run();
         }
     }
 }
