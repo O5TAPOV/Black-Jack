@@ -9,7 +9,7 @@ namespace Logic
 {
     public class CommonLogic
     {
-        public static List <string> cards = new List<string>();
+        private static List <string> cards = new List<string>();
         public static void AddCard(List<string> firstCards = null, List<string> secondCards = null) 
         {
             string card;
@@ -24,7 +24,7 @@ namespace Logic
             AddCard(firstCards, secondCards); AddCard(firstCards, secondCards); 
         }
 
-        public static byte cardConvertationFrom6toK(string card)
+        private static byte cardConvertationFrom6toK(string card)
         {
             return card switch
             {
@@ -39,8 +39,8 @@ namespace Logic
                 _ => 0
             };
         }
-        public static string GetCardNominal(string card) => card.Substring(1);
-        public static byte CardsSum(List<string> targetCards = null)
+        private static string GetCardNominal(string card) => card.Substring(1);
+        private static byte CardsSum(List<string> targetCards = null)
         {
             targetCards ??= cards;
             List<int> sum = new List<int>();
