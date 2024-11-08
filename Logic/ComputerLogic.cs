@@ -8,6 +8,6 @@ namespace Logic
 {
     public class ComputerLogic : CommonLogic
     {
-
+        public static List<string> cardsComputer = new List<string>();
     }
 }

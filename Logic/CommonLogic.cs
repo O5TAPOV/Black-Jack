@@ -10,7 +10,7 @@ namespace Logic
     public class CommonLogic
     {
         public static List <string> cards = new List<string>();
-        public void AddCard(List<string> firstCards = null, List<string> secondCards = null) 
+        public static void AddCard(List<string> firstCards = null, List<string> secondCards = null) 
         {
             string card;
             firstCards ??= cards;
@@ -20,8 +20,8 @@ namespace Logic
                 if (!firstCards.Contains(card) && (secondCards == null || !secondCards.Contains(card))) { firstCards.Add(card); break; }
             }
         }
-        public void AddFirstCards() { 
-            AddCard(); AddCard(); 
+        public static void AddFirstCards(List<string> firstCards = null, List<string> secondCards = null) { 
+            AddCard(firstCards, secondCards); AddCard(firstCards, secondCards); 
         }
 
         public static byte cardConvertationFrom6toK(string card)
@@ -40,10 +40,11 @@ namespace Logic
             };
         }
         public static string GetCardNominal(string card) => card.Substring(1);
-        public static byte CardsSum()
+        public static byte CardsSum(List<string> targetCards = null)
         {
+            targetCards ??= cards;
             List<int> sum = new List<int>();
-            List<string> nominalCards = cards.Select(GetCardNominal).ToList();
+            List<string> nominalCards = targetCards.Select(GetCardNominal).ToList();
 
             //Перенесення "Туза" в кінець списку
             if (nominalCards.Contains("A") && nominalCards.Last() != "A")
@@ -61,12 +62,12 @@ namespace Logic
             return (byte)sum.Sum();
         }
 
-        public void ShowCards(List<string> targetCards = null)
+        public static void ShowCards(List<string> targetCards = null)
         {
             targetCards ??= cards;
-            Console.Write("Ваші карти: ");
+            Console.Write("Карти: ");
             foreach (string c in targetCards) Console.Write($"{c} ");
-            Console.WriteLine($"\nСума карт: {CardsSum()}\n");
+            Console.WriteLine($"\nСума карт: {CardsSum(targetCards)}\n");
         }
     }
 }
