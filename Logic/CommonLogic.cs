@@ -16,13 +16,14 @@ namespace Logic
             targetCards.Add(Cards.GenerateCard());
             targetCards.Add(Cards.GenerateCard()); 
         }
-        public void AddCard() 
+        public void AddCard(List<string> targetCards = null) 
         {
+            targetCards ??= cards;
             string card;
             while (true)
             {
                 card = Cards.GenerateCard();
-                if (!cards.Contains(card)) { cards.Add(card); break; }
+                if (!targetCards.Contains(card)) { targetCards.Add(card); break; }
             }
         }
 
