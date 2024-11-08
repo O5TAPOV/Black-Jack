@@ -9,11 +9,11 @@ namespace Black_Jack
         static void Main(string[] args)
         {
             Settings.ConsoleSetting();
-            CommonLogic cards = new CommonLogic();
-            cards.AddFirstCards();
-            cards.OutputCards();
-            cards.AddCard();
-            cards.OutputCards();
+            PlayerLogic cardsPlayer = new PlayerLogic();
+            cardsPlayer.AddFirstCards();
+            cardsPlayer.OutputCards();
+            cardsPlayer.AddCard();
+            cardsPlayer.OutputCards();
         }
     }
 }
