@@ -8,56 +8,32 @@ namespace Logic
 {
     public class Game : CommonLogic
     {
-        private static int MAX_SUM = 30;
+        
         public static void Run()
         {
             List<string> cardsPlayer = PlayerLogic.cardsPlayer;
             List<string> cardsComputer = ComputerLogic.cardsComputer;
-            bool isAddCard;
+            
             do
             {
                 AddFirstCards(cardsPlayer, cardsComputer);
                 AddFirstCards(cardsComputer, cardsPlayer);
-                ShowCards(cardsPlayer);
-                while (true)
-                {
-                    if (CardsSum(cardsPlayer) < MAX_SUM) isAddCard = EnterBoolean("1 - так\n0 - ні\nБажаєте добрати карту?: ");
-                    else { Console.WriteLine($"Ви більше не можете брати карти, оскільки їх сума перевищує {MAX_SUM}"); break; }
 
-                    if (isAddCard)
-                        AddCard(cardsPlayer);
-                    else
-                        break;
-
-                    ShowCards(cardsPlayer);
-                }
-
+                PlayerLogic.Move();
+                ComputerLogic.Move();
+                
+                ShowCards("гравця", cardsPlayer);
+                ShowCards("комп'ютера", cardsComputer, true);
+                Console.WriteLine($"Winner: {Results(cardsPlayer, cardsComputer)}");
                 Clear(cardsPlayer);
                 Clear(cardsComputer);
+                continueAddCards = true;
             }
             while (Restart());
             Exit();
         }
 
-        private static bool EnterBoolean(string prompt)
-        {
-            while (true)
-            {
-                Console.Write(prompt);
-                string str = Console.ReadLine();
-                Console.WriteLine();
-                try
-                {
-                    return Convert.ToBoolean(int.Parse(str));
-                }
-                catch
-                {
-                    Console.Write("\nСталась помилка, спробуйте ще раз: ");
-                }
-            }
-        }
-
-        private static bool Restart() => EnterBoolean("1 - так\n0 - ні\nБажаєте почати гру знову?: ");
+        private static bool Restart() => EnterBoolean("\n1 - так\n0 - ні\nБажаєте почати гру знову?: ", true);
 
         private static void Exit() 
         {

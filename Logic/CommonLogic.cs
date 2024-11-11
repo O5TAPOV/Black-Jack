@@ -7,8 +7,12 @@ using Common;
 
 namespace Logic
 {
-    public class CommonLogic
+    public abstract class CommonLogic
     {
+        protected static int MAX_SUM = 21;
+        protected static bool isAddCard;
+        protected static bool continueAddCards = true;
+
         private static List <string> cards = new List<string>();
         public static void AddCard(List<string> firstCards = null, List<string> secondCards = null) 
         {
@@ -62,19 +66,77 @@ namespace Logic
             return (byte)sum.Sum();
         }
 
-        public static void ShowCards(List<string> targetCards = null)
+        public static void ShowCards(string prompt, List<string> targetCards = null, bool isResults = false)
         {
-            Console.Clear();
+            if(!isResults)
+                Console.Clear();
+
             targetCards ??= cards;
-            Console.Write("Карти: ");
+            Console.Write($"Карти {prompt}: ");
             foreach (string c in targetCards) Console.Write($"{c} ");
-            Console.WriteLine($"\nСума карт: {CardsSum(targetCards)}\n");
+            Console.WriteLine($"\nСума карт {prompt}: {CardsSum(targetCards)}\n");
         }
 
         public static void Clear(List<string> targetCards = null)
         {
             targetCards ??= cards;
             targetCards.Clear();
+        }
+
+        public static bool EnterBoolean(string prompt, bool isRestart = false)
+        {
+            while (true)
+            {
+                Console.Write(prompt);
+                string str = Console.ReadLine();
+                Console.WriteLine();
+                try
+                {
+                    return Convert.ToBoolean(int.Parse(str));
+                }
+                catch
+                {
+                    if (isRestart)
+                        Console.Clear();
+                    Console.Write("\nСталась помилка, спробуйте ще раз: ");
+                }
+            }
+        }
+
+        public static void isAddingCards(bool isAddCard, ref bool continueAddCards, List<string> targetCards = null)
+        {
+            
+            targetCards ??= cards;
+            if (isAddCard)
+                AddCard(targetCards);
+            else
+            {
+                continueAddCards = false;
+                return;
+            }   
+        }
+
+        public static string Results(List<string> firstCards, List<string> secondCards)
+        {
+            const int point21 = 21;
+            int sum1 = CardsSum(firstCards), sum2 = CardsSum(secondCards);
+
+            if (sum2 == sum1 || (sum1 > point21 && sum2 > point21))
+                return "Draw";
+
+            if (sum1 <= point21)
+            {
+                if (sum2 > point21 || sum1 > sum2)
+                    return "Player";
+            }
+
+            if (sum2 <= point21)
+            {
+                if (sum1 > point21 || sum2 > sum1)
+                    return "Computer";
+            }
+
+            return "Error";
         }
     }
 }
