@@ -34,7 +34,7 @@ namespace Logic
                     }
                 }
                 else { break; }
-                isAddingCards(isAddCard, ref continueAddCards, cardsComputer);
+                isAddingCards(isAddCard, ref continueAddCards, cardsComputer, PlayerLogic.cardsPlayer);
             }
         }
     }

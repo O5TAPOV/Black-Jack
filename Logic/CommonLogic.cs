@@ -12,19 +12,16 @@ namespace Logic
         protected static int MAX_SUM = 21;
         protected static bool isAddCard;
         protected static bool continueAddCards = true;
-
-        private static List <string> cards = new List<string>();
-        public static void AddCard(List<string> firstCards = null, List<string> secondCards = null) 
+        public static void AddCard(List<string> firstCards, List<string> secondCards) 
         {
             string card;
-            firstCards ??= cards;
             while (true)
             {
                 card = Cards.GenerateCard();
                 if (!firstCards.Contains(card) && (secondCards == null || !secondCards.Contains(card))) { firstCards.Add(card); break; }
             }
         }
-        public static void AddFirstCards(List<string> firstCards = null, List<string> secondCards = null) { 
+        public static void AddFirstCards(List<string> firstCards, List<string> secondCards) { 
             AddCard(firstCards, secondCards); AddCard(firstCards, secondCards); 
         }
 
@@ -44,9 +41,8 @@ namespace Logic
             };
         }
         private static string GetCardNominal(string card) => card.Substring(1);
-        public static byte CardsSum(List<string> targetCards = null)
+        public static byte CardsSum(List<string> targetCards)
         {
-            targetCards ??= cards;
             List<int> sum = new List<int>();
             List<string> nominalCards = targetCards.Select(GetCardNominal).ToList();
 
@@ -66,20 +62,18 @@ namespace Logic
             return (byte)sum.Sum();
         }
 
-        public static void ShowCards(string prompt, List<string> targetCards = null, bool isResults = false)
+        public static void ShowCards(string prompt, List<string> targetCards, bool isResults = false)
         {
             if(!isResults)
                 Console.Clear();
 
-            targetCards ??= cards;
             Console.Write($"Карти {prompt}: ");
             foreach (string c in targetCards) Console.Write($"{c} ");
             Console.WriteLine($"\nСума карт {prompt}: {CardsSum(targetCards)}\n");
         }
 
-        public static void Clear(List<string> targetCards = null)
+        public static void Clear(List<string> targetCards)
         {
-            targetCards ??= cards;
             targetCards.Clear();
         }
 
@@ -103,12 +97,10 @@ namespace Logic
             }
         }
 
-        public static void isAddingCards(bool isAddCard, ref bool continueAddCards, List<string> targetCards = null)
+        public static void isAddingCards(bool isAddCard, ref bool continueAddCards, List<string> targetCards, List<string> secondCards)
         {
-            
-            targetCards ??= cards;
             if (isAddCard)
-                AddCard(targetCards);
+                AddCard(targetCards, secondCards);
             else
             {
                 continueAddCards = false;
